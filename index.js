@@ -47,9 +47,6 @@ function verifyJWT(req, res, next) {
 
 
 
-
-
-
 async function run() {
     try {
         await client.connect();
@@ -60,12 +57,11 @@ async function run() {
 
         app.get('/service', async (req, res) => {
             const query = {};
-            const cursor = serviceCollection.find(query)
+            const cursor = serviceCollection.find(query).project({name:1});
             const service = await cursor.toArray()
             res.send(service)
 
         })
-
 
 
 // all users 
@@ -83,11 +79,6 @@ app.get('/admin/:email', async(req,res)=>{
     const isAdmin= user.role === 'admin'
     res.send({admin: isAdmin})
 })
-
-
-
-
-
 
 
 
@@ -111,8 +102,6 @@ app.put('/user/admin/:email', verifyJWT, async (req, res) => {
         res.status(403).send({message: 'forbidden'});
     }
 })
-
-
 
         ///////// update
 
@@ -165,7 +154,6 @@ app.put('/user/admin/:email', verifyJWT, async (req, res) => {
         })
 
 
-
         /// booking appointment
 
         app.get('/booking', verifyJWT, async (req, res) => {
@@ -187,10 +175,6 @@ app.put('/user/admin/:email', verifyJWT, async (req, res) => {
         })
 
 
-
-
-
-
         //////// naming  
 
         app.post('/booking', async (req, res) => {
@@ -206,23 +190,12 @@ app.put('/user/admin/:email', verifyJWT, async (req, res) => {
 
 
 
-
-
-
-
     }
     finally {
 
     }
 }
 run().catch(console.dir)
-
-
-
-
-
-
-
 
 
 
