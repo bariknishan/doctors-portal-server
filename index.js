@@ -147,8 +147,7 @@ async function run() {
 
         })
 
-
-        /// booking appointment
+        /// booking appointment system
 
         app.get('/booking', verifyJWT, async (req, res) => {
 
